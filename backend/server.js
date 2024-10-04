@@ -1,89 +1,73 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors'); // Import CORS
-
-// Load API keys from environment variables
-const BINANCE_API_KEY = process.env.BINANCE_API_KEY;
-const BINANCE_SECRET = process.env.BINANCE_SECRET;
-const COINBASE_API_KEY = process.env.COINBASE_API_KEY;
-const BITFINEX_API_KEY = process.env.BITFINEX_API_KEY;
-const KRAKEN_API_KEY = process.env.KRAKEN_API_KEY;
-
+const cors = require('cors');
 const app = express();
-app.use(cors()); 
-
 const PORT = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
 
-// Fetch price from Binance
-const getBinancePrice = async (symbol) => {
-  try {
-    const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`);
-    return parseFloat(response.data.price);
-  } catch (error) {
-    console.error('Error fetching Binance price:', error.response ? error.response.data : error.message);
-    return null;
-  }
+const EXCHANGES = {
+  BINANCE: 'Binance',
+  COINBASE: 'Coinbase',
+  COINMARKETCAP: 'CoinMarketCap',
+  COINGECKO: 'CoinGecko',
+  CRYPTOCOMPARE: 'CryptoCompare',
+  BITFINEX: 'Bitfinex'
 };
 
-// Fetch price from Coinbase
-const getCoinbasePrice = async (symbol) => {
+const getPrice = async (exchange, symbol) => {
   try {
-    const response = await axios.get(`https://api.coinbase.com/v2/prices/${symbol}/spot`);
-    return parseFloat(response.data.data.amount);
+    let response;
+    switch (exchange) {
+      case EXCHANGES.BINANCE:
+        response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`);
+        return parseFloat(response.data.price);
+      case EXCHANGES.COINBASE:
+        response = await axios.get(`https://api.coinbase.com/v2/prices/${symbol.replace('USDT', '-USD')}/spot`);
+        return parseFloat(response.data.data.amount);
+      case EXCHANGES.COINMARKETCAP:
+        response = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest`, {
+          headers: { 'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY },
+          params: { symbol: symbol.replace('USDT', '') }
+        });
+        return response.data.data[symbol.replace('USDT', '')].quote.USD.price;
+      case EXCHANGES.COINGECKO:
+        const currency = symbol.slice(0, 3).toLowerCase();
+        response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=usd`);
+        return response.data[currency]?.usd;
+      case EXCHANGES.CRYPTOCOMPARE:
+        response = await axios.get(`https://min-api.cryptocompare.com/data/price?fsym=${symbol.slice(0, 3)}&tsyms=USD`);
+        return response.data.USD;
+      case EXCHANGES.BITFINEX:
+        response = await axios.get(`https://api.bitfinex.com/v1/pubticker/${symbol}`);
+        return parseFloat(response.data.last_price);
+      default:
+        throw new Error(`Unsupported exchange: ${exchange}`);
+    }
   } catch (error) {
-    console.error('Error fetching Coinbase price:', error.response ? error.response.data : error.message);
-    return null;
-  }
-};
-
-// Fetch price from Kraken
-const getKrakenPrice = async (symbol) => {
-  try {
-    const response = await axios.get(`https://api.kraken.com/0/public/Ticker?pair=${symbol}`);
-    return parseFloat(response.data.result[symbol.toUpperCase()]['c'][0]);
-  } catch (error) {
-    console.error('Error fetching Kraken price:', error.response ? error.response.data : error.message);
-    return null;
-  }
-};
-
-// Fetch price from Bitfinex
-const getBitfinexPrice = async (symbol) => {
-  try {
-    const response = await axios.get(`https://api.bitfinex.com/v2/tickers/${symbol}`);
-    return parseFloat(response.data[0][7]); // Corrected to access the right value
-  } catch (error) {
-    console.error('Error fetching Bitfinex price:', error.response ? error.response.data : error.message);
+    console.error(`Error fetching ${exchange} price:`, error.response ? error.response.data : error.message);
     return null;
   }
 };
 
 app.get('/arbitrage', async (req, res) => {
-  const { symbol } = req.query; 
-  console.log('Received request for symbol:', symbol); 
+  const { symbol } = req.query;
+  console.log('Received request for symbol:', symbol);
 
-  const binancePrice = await getBinancePrice(symbol);
-  const coinbasePrice = await getCoinbasePrice(symbol); // Assuming 'symbol' is correct for Coinbase
-  const krakenPrice = await getKrakenPrice(symbol);
-  const bitfinexPrice = await getBitfinexPrice(symbol);
+  const prices = await Promise.all(
+    Object.values(EXCHANGES).map(async (exchange) => {
+      const price = await getPrice(exchange, symbol);
+      return { [exchange]: price };
+    })
+  );
 
-  console.log(`Binance Price: ${binancePrice}, Coinbase Price: ${coinbasePrice}, Kraken Price: ${krakenPrice}, Bitfinex Price: ${bitfinexPrice}`);
+  const result = Object.assign({}, ...prices);
+  
+  console.log('Prices:', result);
 
-  // Respond with the prices or handle the error appropriately
-  if (binancePrice && coinbasePrice && krakenPrice && bitfinexPrice) {
-    res.json({
-      binancePrice,
-      coinbasePrice,
-      krakenPrice,
-      bitfinexPrice
-    });
-  } else {
-    console.error('Error: Could not fetch all prices');
-    res.status(500).json({ error: 'Error fetching prices.' });
-  }
+  res.json(result);
 });
 
 app.listen(PORT, () => {
