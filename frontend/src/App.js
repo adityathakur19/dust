@@ -23,8 +23,7 @@ const SYMBOLS = [
     'MANA', 'ICP', 'ALGO', 'AVAX', 'AAVE', 'SAND', 'SUSHI', 'NEAR', 'FTM', 'MATIC',
     'CHZ', 'ZIL', 'RUNE', 'FLOKI', 'QTUM', 'CRV', 'DASH', 'KSM'
   ];
-
-
+  
 const BASE_CURRENCIES = ['BTC', 'USD'];
 
 const ARBITRAGE_PERCENTAGES = [
@@ -107,13 +106,16 @@ const ArbitrageFinderBot = () => {
       <h1 className="title">Arbitrage Opportunity Finder</h1>
 
       <div className="settings-panel">
-        <h2 className="subtitle">Settings</h2>
         <div className="settings-grid">
           <div className="exchange-selection">
             <h3 className="section-title">Select Exchanges</h3>
             <div className="exchange-buttons">
               <button onClick={handleSelectAllExchanges} className="exchange-button">Select All</button>
+              <br></br>
+              <br></br>
               <button onClick={handleClearAllExchanges} className="exchange-button">Clear All</button>
+              <br></br>
+              <br></br>
             </div>
             <div className="exchange-grid">
               {Object.entries(EXCHANGES).map(([key, value]) => (
