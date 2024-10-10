@@ -9,27 +9,28 @@
 .title {
   text-align: center;
   font-size: 2rem;
-  color: #333;
+  color: #2c3e50;
   margin-bottom: 20px;
 }
 
 .subtitle {
   font-size: 1.5rem;
-  color: #444;
-  margin-bottom: 10px;
+  color: #34495e;
+  margin-bottom: 15px;
 }
 
 .settings-panel {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
 .settings-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 40px;
 }
 
 .exchange-selection {
@@ -38,61 +39,115 @@
 
 .section-title {
   font-size: 1.25rem;
-  margin-bottom: 10px;
-  color: #555;
+  margin-bottom: 25px;
+  color: #2980b9;
 }
 
 .exchange-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
 }
 
 .exchange-checkbox {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 0.9rem;
-  color: #333;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 0.95rem;
+  color: #34495e;
+  cursor: pointer;
+}
+
+.exchange-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  accent-color: #3498db;
 }
 
 .exchange-button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  background-color: #007BFF;
+  padding: 8px 12px;
+  background-color: #3498db;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
 .exchange-button:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 .select-input {
-  padding: 5px;
+  padding: 8px;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 5px;
+  border: 1px solid #bdc3c7;
   font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: #3498db;
 }
 
 .fetch-button {
-  background-color: #28a745;
+  background-color: #2ecc71;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   width: 100%;
+  margin-top: 20px;
 }
 
 .fetch-button:hover {
-  background-color: #218838;
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Improved layout for checkboxes and buttons */
+.exchange-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.exchange-options .exchange-checkbox {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.exchange-options .exchange-button {
+  flex: 0 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .exchange-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .exchange-options .exchange-checkbox,
+  .exchange-options .exchange-button {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }
 
 .results-summary {
