@@ -18,9 +18,12 @@ const EXCHANGES = {
 };
 
 const SYMBOLS = [
-  'BTC', 'ETH', 'BNB', 'XRP', 'ADA', 'DOGE', 'DOT', 'UNI', 'LTC', 'LINK',
-  'SOL', 'MATIC', 'AVAX', 'ATOM', 'TRX', 'SHIB', 'XLM', 'BCH', 'FIL', 'EOS'
+  'BTC', 'ETH', 'BNB', 'XRP', 'ADA', 'DOGE', 'DOT', 'UNI', 'LTC', 'LINK',
+  'SOL', 'MATIC', 'AVAX', 'ATOM', 'TRX', 'SHIB', 'XLM', 'BCH', 'FIL', 'EOS',
+  'MANA', 'ICP', 'ALGO', 'AVAX', 'AAVE', 'SAND', 'SUSHI', 'NEAR', 'FTM', 'MATIC',
+  'CHZ', 'ZIL', 'RUNE', 'FLOKI', 'QTUM', 'CRV', 'DASH', 'KSM', 'STMX', 'ZRX'
 ];
+
 
 const BASE_CURRENCIES = ['BTC', 'USD'];
 
