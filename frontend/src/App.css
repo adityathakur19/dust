@@ -1,241 +1,174 @@
-/* General Styles */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 20px;
-}
-
-.arbitrage-container {
+/* General styles */
+.container {
   max-width: 1200px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-/* Title Styles */
 .title {
   text-align: center;
-  color: #2c3e50;
-  font-size: 2.8rem; /* Increased size for better visibility */
-  margin-bottom: 40px; /* Increased bottom margin */
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-/* Dropdown Styles */
-.dropdown-container {
-  margin: 20px 0;
+.subtitle {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 10px;
 }
 
-.symbol-select,
-.percentage-select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: 1px solid #ddd;
+.settings-panel {
+  background-color: #f9f9f9;
+  padding: 15px;
   border-radius: 8px;
-  background-color: #fff;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 20px;
 }
 
-.symbol-select:focus,
-.percentage-select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-/* Exchange Container */
-.exchange-container {
-  margin-bottom: 30px;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px; /* Increased space for better separation */
-}
-
-.select-button,
-.clear-button,
-.fetch-button {
-  padding: 14px 22px; /* Slightly larger padding */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  font-size: 1rem;
-}
-
-.select-button:hover,
-.clear-button:hover,
-.fetch-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
-}
-
-/* Checkbox Group */
-.checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.exchange-label {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-/* Table Styles */
-.price-card-container,
-.arbitrage-info {
-  margin: 20px 0;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #ffffff;
+.exchange-selection {
+  grid-column: 1 / -1;
 }
 
 .section-title {
-  font-size: 1.8rem; /* Increased size for section titles */
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.exchange-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.exchange-checkbox {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0.9rem;
   color: #333;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 10px;
 }
 
-.price-table {
+.exchange-button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.exchange-button:hover {
+  background-color: #0056b3;
+}
+
+.select-input {
+  padding: 5px;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-
-.price-table th,
-.price-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #ccc;
   font-size: 1rem;
 }
 
-.price-table th {
-  background-color: #007bff;
+.fetch-button {
+  background-color: #28a745;
   color: white;
-  text-transform: uppercase;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
 }
 
-.price-table tr:nth-child(even) {
+.fetch-button:hover {
+  background-color: #218838;
+}
+
+.results-summary {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Table Styles */
+.results-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.results-table th, .results-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.results-table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.results-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.price-table tr:hover {
+.results-table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Opportunity Container */
-.opportunity-container {
-  margin-top: 30px;
+.results-table td.price {
+  background-color: #fff;
 }
 
-.opportunity-box {
-  padding: 15px;
-  border-radius: 8px;
-  margin: 15px 0;
-  color: white;
-  font-size: 16px;
-  transition: transform 0.2s;
-}
-
-.opportunity-box:hover {
-  transform: scale(1.02);
-}
-
-.buy-opportunity {
-  background-color: #28a745; /* Green box for buy opportunity */
-}
-
-.sell-opportunity {
-  background-color: #dc3545; /* Red box for sell opportunity */
-}
-
-/* Profit Result Styles */
-.profit-result {
-  margin-top: 15px;
+.results-table td.min-price {
+  background-color: #d4edda;
+  color: #155724;
   font-weight: bold;
-  font-size: 1.5em;
+}
+
+.results-table td.max-price {
+  background-color: #f8d7da;
+  color: #721c24;
+  font-weight: bold;
+}
+
+.results-table td.arbitrage-percentage {
+  background-color: #ffeb3b;
   color: #333;
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
+  font-weight: bold;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  text-align: center;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .button-group {
-    flex-direction: column;
+  .settings-grid {
+    grid-template-columns: 1fr;
   }
-
-  .select-button,
-  .clear-button,
-  .fetch-button {
-    width: 100%;
-    margin-bottom: 10px;
+  
+  .exchange-checkbox {
+    display: block;
   }
-}
-
-/* Comparison Styles */
-.comparison-container {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 5px;
-}
-
-.comparison-controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.currency-select {
-  padding: 5px;
-  font-size: 14px;
-}
-
-.compare-button {
-  padding: 5px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.compare-button:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
-}
-
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.comparison-table th,
-.comparison-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-.comparison-table th {
-  background-color: #f2f2f2;
 }
